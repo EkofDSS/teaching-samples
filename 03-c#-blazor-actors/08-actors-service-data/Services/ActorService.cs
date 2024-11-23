@@ -21,6 +21,7 @@ namespace project.Services
         {
             Actor[] result = await _httpClient.GetFromJsonAsync<Actor[]>(
                 "sample-data/actors.json");
+            System.Console.WriteLine(result.Length);
             return new List<Actor>(result);
         }
     }

@@ -24,6 +24,7 @@ namespace project
                     builder.HostEnvironment.BaseAddress) });
            
             builder.Services.AddScoped<IActorService, ActorService>();
+            //builder.Services.AddScoped<IActorService, MickeyMouseService>();
 
             await builder.Build().RunAsync();
         }
