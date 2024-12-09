@@ -74,7 +74,7 @@ namespace ActorsRestService.Controllers
             oldActor.CountryCode = newData.CountryCode;
             oldActor.DateOfBirth = newData.DateOfBirth;
             oldActor.CreatedAt = newData.CreatedAt;
-            await _supabase
+            var _ = await _supabase
                     .From<Actor>()
                     .Update(oldActor);
             return NoContent();

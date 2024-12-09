@@ -7,10 +7,10 @@ namespace ActorsRestService.Models
     [Table("Country")]
     public partial class Country: BaseModel
     {
-        [PrimaryKey("country_code")]
+        [PrimaryKey("code")]
         public string CountryCode { get; set; }
 
-        [Column("country_name")]
+        [Column("name")]
         public string? CountryName { get; set; }
 
         [Column("created_at")]

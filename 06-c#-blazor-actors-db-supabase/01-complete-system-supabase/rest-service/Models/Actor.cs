@@ -7,7 +7,7 @@ namespace ActorsRestService.Models
     [Table("Actor")]
     public partial class Actor: BaseModel
     {
-        [PrimaryKey("actor_id")]
+        [PrimaryKey("id")]
         public long ActorId { get; set; }
 
         [Column("last_name")]

@@ -5,21 +5,25 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Linq;
 
+using project;
 using project.Models;
 using project.ViewModels;
+using static System.Net.WebRequestMethods;
 
 namespace project.Services
 {
     public class CountryService : ICountryService
     {
-        private const string _requestUri = "https://localhost:6001/api/Countries";
+        private readonly string _requestUri;
         private readonly HttpClient _httpClient;
         private readonly IMessagingService _messagingService;
 
-        public CountryService(HttpClient httpClient, IMessagingService messagingService)
+        public CountryService(HttpClient httpClient, 
+            IMessagingService messagingService)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(
                 nameof(httpClient));
+            _requestUri = "https://localhost:6001/api/Countries";
             _messagingService = messagingService ?? throw new
                 ArgumentNullException(nameof(messagingService));
         }

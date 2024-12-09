@@ -12,14 +12,16 @@ namespace project.Services
 {
     public class ActorService : IActorService
     {
-        private const string _requestUri = "https://localhost:6001/api/Actors";
+        private readonly string _requestUri;
         private readonly HttpClient _httpClient;
         private readonly IMessagingService _messagingService;
 
-        public ActorService(HttpClient httpClient, IMessagingService messagingService)
+        public ActorService(HttpClient httpClient,
+            IMessagingService messagingService)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(
                 nameof(httpClient));
+            _requestUri = "https://localhost:6001/api/Actors";
             _messagingService = messagingService ?? throw new
                 ArgumentNullException(nameof(messagingService));
         }
@@ -68,7 +70,7 @@ namespace project.Services
             // sending request for updating to the server
             ActorUpdateDTO actorUpd = new ActorUpdateDTO()
             {
-                Id = actor.actorId,
+                ActorId = actor.actorId,
                 FirstName = actor.firstName,
                 LastName = actor.lastName,
                 CountryCode = actor.countryCode,
