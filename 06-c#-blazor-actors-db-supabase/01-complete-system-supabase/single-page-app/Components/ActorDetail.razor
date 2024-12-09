@@ -52,25 +52,46 @@
     }
     @if (@_currentMode == @Mode.Edit)
     {
-        <div class="container">
+        <div class="row border my-3 p-3">
             <h2>Edit data for @SelectedActor.firstName @SelectedActor.lastName.ToUpper()</h2>
-            <div>
-                <label> first name: </label>
-                <input @bind="SelectedActor.firstName" placeholder="FirstName">
+        </div>
+        <div class="row border my-3 p-3">
+            <div class="col">
+                <label class="text-danger"> first name: </label>
             </div>
-            <div>
-                <label> last name: </label>
-                <input @bind="SelectedActor.lastName" placeholder="LastName">
+            <div class="col">
+                <input class="text-success" @bind="SelectedActor.firstName" placeholder="FirstName">
             </div>
-            <div>
-                <label> country: </label>
-                <input @bind="SelectedActor.countryCode" placeholder="CountryCode">
+        </div>
+        <div class="row border my-3 p-3">
+            <div class="col">
+                <label class="text-danger"> last name: </label>
             </div>
-            <div>
-                <label> date of birth: </label>
-                <input type="date" @bind="SelectedActor.dateOfBirth" placeholder="DateOfBirth">
+            <div class="col">
+                <input class="text-success" @bind="SelectedActor.lastName" placeholder="LastName">
             </div>
-            <button class="clear" @onclick="Save"> Save</button>
+        </div>
+        <div class="row border my-3 p-3">
+            <div class="col">
+                <label class="text-danger"> country: </label>
+            </div>
+            <div class="col">
+                <input class="text-success" @bind="SelectedActor.countryCode" placeholder="CountryCode">
+            </div>
+        </div>
+        <div class="row border my-3 p-3">
+            <div class="col">
+                <label class="text-danger"> date of birth: </label>
+            </div>
+            <div class="col">
+                <input class="text-success" type="date" @bind="SelectedActor.dateOfBirth" placeholder="DateOfBirth">
+            </div>
+        </div>
+        <div class="row border my-3 p-3">
+            <div class="col align-self-lg-center">
+                <button type="button" class="btn btn-primary" @onclick="Save"> Save</button>
+                <button type="button" class="btn btn-primary" @onclick="Cancel"> Cancel</button>
+            </div>
         </div>
     }
 }
@@ -89,7 +110,7 @@
     protected override async Task OnInitializedAsync()
     {
         _actors = await _actorService.GetActors();
-        if (_actors == null )
+        if (_actors == null)
             return;
         if (_actors.Count(x => x.actorId == long.Parse(Id)) == 0)
             return;
@@ -110,4 +131,12 @@
         await _messagingService.Add("ActorDetail::Actor saved: " + SelectedActor.firstName + " "
         + SelectedActor.lastName);
     }
+
+    private async Task Cancel()
+    {
+        _currentMode = Mode.View;
+        await _messagingService.Add("ActorDetail::Actor changes canceled: " + SelectedActor.firstName + " "
+        + SelectedActor.lastName);
+    }
+
 }
