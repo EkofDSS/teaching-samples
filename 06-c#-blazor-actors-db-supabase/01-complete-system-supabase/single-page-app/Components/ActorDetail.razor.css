@@ -1,7 +1,7 @@
 /* ActorDetailComponent's private CSS styles */
 
 label {
-    color: #435960;
+    color: #17a5d1;
     font-weight: bold;
 }
 
@@ -12,7 +12,7 @@ input {
 
 button {
     margin-top: 20px;
-    background-color: #eee;
+    background-color: aqua;
     padding: 1rem;
     border-radius: 4px;
     font-size: 1rem;

@@ -19,7 +19,7 @@
 .heroes a {
     color: #333;
     text-decoration: none;
-    background-color: #EEE;
+    background-color: #edb2b2;
     margin: .5em;
     padding: .3em 0;
     height: 1.6em;
@@ -30,7 +30,7 @@
 
 .heroes a:hover {
     color: #2c3a41;
-    background-color: #e6e6e6;
+    background-color: #831919;
 }
 
 .heroes a:active {

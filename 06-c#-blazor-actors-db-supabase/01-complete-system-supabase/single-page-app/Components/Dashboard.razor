@@ -12,7 +12,7 @@
     {
         <a class="col-1-4">
             <div class="module hero" @onclick="@(()=>NavigateTo(actor))">
-                <h4>@actor.firstName @actor.lastName.ToUpper()</h4>
+                <h4>@actor.firstName <br/> @actor.lastName.ToUpper()</h4>
             </div>
         </a>
     }
@@ -31,7 +31,7 @@
     private async Task<Actor[]> GetTopActors()
     {
         var actors = await _actorService.GetActors();
-        return actors.Take(5).ToArray();
+        return actors.Take(4).ToArray();
     }
 
     private void NavigateTo(Actor actor)

@@ -11,36 +11,40 @@
 }
 else
 {
-    <h2>All enlisted actors</h2>
+    <div class="container">
+        <h2>All enlisted actors</h2>
 
-    <div>
-        <label>First name:
-            <input @bind="FirstName" />
-        </label>
-        <label>Last name:
-            <input @bind="LastName" />
-        </label>
-        <select @onchange="ConutryChanged">
-            @foreach (var c in _countries)
+        <div>
+            <label>
+                First name:
+                <input @bind="FirstName" />
+            </label>
+            <label>
+                Last name:
+                <input @bind="LastName" />
+            </label>
+            <select @onchange="ConutryChanged">
+                @foreach (var c in _countries)
+                {
+                    <option value=@c.countryCode>@c.countryName</option>
+                }
+            </select>
+            <button @onclick="Add"> Add</button>
+        </div>
+
+        <ul class="heroes">
+            @foreach (var a in _actors)
             {
-                <option value=@c.countryCode>@c.countryName</option>
+                <li>
+                    <span @onclick="@(()=>OnSelect(a))">
+                        <span class="badge">@a.actorId</span> @a.firstName &nbsp; @a.lastName
+                        - @a.dateOfBirth?.ToShortDateString() ( @a.countryCode )
+                    </span>
+                    <button class="delete" @onclick="@(()=>Delete(a))">x</button>
+                </li>
             }
-        </select>
-        <button @onclick="Add"> Add</button>
+        </ul>
     </div>
-
-    <ul class="heroes">
-        @foreach (var a in _actors)
-        {
-            <li>
-                <span @onclick="@(()=>OnSelect(a))">
-                    <span class="badge">@a.actorId</span> @a.firstName &nbsp; @a.lastName
-                    - @a.dateOfBirth?.ToShortDateString() ( @a.countryCode )
-                </span>
-                <button class="delete" @onclick="@(()=>Delete(a))">x</button>
-            </li>
-        }
-    </ul>
 }
 
 @code

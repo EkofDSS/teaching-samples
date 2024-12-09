@@ -7,35 +7,71 @@
 {
     @if (@_currentMode == @Mode.View)
     {
-        <h2>Details for @SelectedActor.firstName @SelectedActor.lastName.ToUpper()</h2>
-        <br />
-        <div><span>id: </span>@SelectedActor.actorId</div>
-        <div><span>first name: </span>@SelectedActor.firstName</div>
-        <div><span>last name: </span>@SelectedActor.lastName</div>
-        <div><span>country: </span>@SelectedActor.countryCode</div>
-        <div><span>date of birth: </span> @SelectedActor.dateOfBirth?.ToString("MM/dd/yyyy")</div>
-        <button class="clear" @onclick="Edit"> Edit</button>
+        <div class="row border my-3 p-3">
+            <h2 class="text-success">
+                Details for <span class="text-warning"> @SelectedActor.firstName @SelectedActor.lastName.ToUpper()</span>
+            </h2>
+        </div>
+        <div class="row border my-3 p-3">
+            <div class="col bg-dark text-white">
+                id:
+            </div>
+            <div class="col text-success">
+                @SelectedActor.actorId
+            </div>
+        </div>
+        <div class="row border my-3 p-3">
+            <div class="col bg-dark text-white">
+                first name:
+            </div>
+            <div class="col text-success">@SelectedActor.firstName</div>
+        </div>
+        <div class="row border my-3 p-3">
+            <div class="col bg-dark text-white">
+                last name:
+            </div>
+            <div class="col text-success">@SelectedActor.lastName</div>
+        </div>
+        <div class="row border my-3 p-3">
+            <div class="col bg-dark text-white">
+                country code:
+            </div>
+            <div class="col text-success">@SelectedActor.countryCode</div>
+        </div>
+        <div class="row border my-3 p-3">
+            <div class="col bg-dark text-white">
+                date of birth:
+            </div>
+            <div class="col text-success">
+                @SelectedActor.dateOfBirth?.ToString("MM/dd/yyyy")
+            </div>
+        </div>
+        <div class="row border my-3 p-3">
+            <button type="button" class="btn btn-primary" @onclick="Edit"> Edit</button>
+        </div>
     }
     @if (@_currentMode == @Mode.Edit)
     {
-        <h2>Edit data for @SelectedActor.firstName @SelectedActor.lastName.ToUpper()</h2>
-        <div>
-            <label> first name: </label>
-            <input @bind="SelectedActor.firstName" placeholder="FirstName">
+        <div class="container">
+            <h2>Edit data for @SelectedActor.firstName @SelectedActor.lastName.ToUpper()</h2>
+            <div>
+                <label> first name: </label>
+                <input @bind="SelectedActor.firstName" placeholder="FirstName">
+            </div>
+            <div>
+                <label> last name: </label>
+                <input @bind="SelectedActor.lastName" placeholder="LastName">
+            </div>
+            <div>
+                <label> country: </label>
+                <input @bind="SelectedActor.countryCode" placeholder="CountryCode">
+            </div>
+            <div>
+                <label> date of birth: </label>
+                <input type="date" @bind="SelectedActor.dateOfBirth" placeholder="DateOfBirth">
+            </div>
+            <button class="clear" @onclick="Save"> Save</button>
         </div>
-        <div>
-            <label> last name: </label>
-            <input @bind="SelectedActor.lastName" placeholder="LastName">
-        </div>
-        <div>
-            <label> country: </label>
-            <input @bind="SelectedActor.countryCode" placeholder="CountryCode">
-        </div>
-        <div>
-            <label> date of birth: </label>
-            <input type="date" @bind="SelectedActor.dateOfBirth" placeholder="DateOfBirth">
-        </div>
-        <button class="clear" @onclick="Save"> Save</button>
     }
 }
 
@@ -53,6 +89,10 @@
     protected override async Task OnInitializedAsync()
     {
         _actors = await _actorService.GetActors();
+        if (_actors == null )
+            return;
+        if (_actors.Count(x => x.actorId == long.Parse(Id)) == 0)
+            return;
         SelectedActor = _actors.First(x => x.actorId == long.Parse(Id));
     }
 
