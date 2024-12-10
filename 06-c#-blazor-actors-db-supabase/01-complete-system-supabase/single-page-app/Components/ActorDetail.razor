@@ -9,53 +9,53 @@
     {
         <div class="row border my-3 p-3">
             <h2 class="text-success">
-                Details for <span class="text-warning"> @SelectedActor.firstName @SelectedActor.lastName.ToUpper()</span>
+                Details for <span class="bg-dark text-success"> @SelectedActor.firstName @SelectedActor.lastName.ToUpper()</span>
             </h2>
         </div>
-        <div class="row border my-3 p-3">
-            <div class="col bg-dark text-white">
+        <div class="row my-3 p-3">
+            <div class="col text-success">
                 id:
             </div>
-            <div class="col text-success">
+            <div class="col bg-dark text-white">
                 @SelectedActor.actorId
             </div>
         </div>
-        <div class="row border my-3 p-3">
-            <div class="col bg-dark text-white">
+        <div class="row my-3 p-3">
+            <div class="text-success">
                 first name:
             </div>
-            <div class="col text-success">@SelectedActor.firstName</div>
+            <div class="col bg-dark text-white">@SelectedActor.firstName</div>
         </div>
-        <div class="row border my-3 p-3">
-            <div class="col bg-dark text-white">
+        <div class="row my-3 p-3">
+            <div class="text-success">
                 last name:
             </div>
-            <div class="col text-success">@SelectedActor.lastName</div>
+            <div class="col bg-dark text-white">@SelectedActor.lastName</div>
         </div>
-        <div class="row border my-3 p-3">
-            <div class="col bg-dark text-white">
+        <div class="row my-3 p-3">
+            <div class="text-success">
                 country code:
             </div>
-            <div class="col text-success">@SelectedActor.countryCode</div>
+            <div class="col bg-dark text-white">@SelectedActor.countryCode</div>
         </div>
-        <div class="row border my-3 p-3">
-            <div class="col bg-dark text-white">
+        <div class="row my-3 p-3">
+            <div class="text-success">
                 date of birth:
             </div>
-            <div class="col text-success">
+            <div class="col bg-dark text-white">
                 @SelectedActor.dateOfBirth?.ToString("MM/dd/yyyy")
             </div>
         </div>
-        <div class="row border my-3 p-3">
+        <div class="row my-3 p-3">
             <button type="button" class="btn btn-primary" @onclick="Edit"> Edit</button>
         </div>
     }
     @if (@_currentMode == @Mode.Edit)
     {
-        <div class="row border my-3 p-3">
+        <div class="row my-3 p-3">
             <h2>Edit data for @SelectedActor.firstName @SelectedActor.lastName.ToUpper()</h2>
         </div>
-        <div class="row border my-3 p-3">
+        <div class="row my-3 p-3">
             <div class="col">
                 <label class="text-danger"> first name: </label>
             </div>
@@ -63,7 +63,7 @@
                 <input class="text-success" @bind="SelectedActor.firstName" placeholder="FirstName">
             </div>
         </div>
-        <div class="row border my-3 p-3">
+        <div class="row my-3 p-3">
             <div class="col">
                 <label class="text-danger"> last name: </label>
             </div>
@@ -71,7 +71,7 @@
                 <input class="text-success" @bind="SelectedActor.lastName" placeholder="LastName">
             </div>
         </div>
-        <div class="row border my-3 p-3">
+        <div class="row my-3 p-3">
             <div class="col">
                 <label class="text-danger"> country: </label>
             </div>
@@ -79,7 +79,7 @@
                 <input class="text-success" @bind="SelectedActor.countryCode" placeholder="CountryCode">
             </div>
         </div>
-        <div class="row border my-3 p-3">
+        <div class="row my-3 p-3">
             <div class="col">
                 <label class="text-danger"> date of birth: </label>
             </div>
@@ -87,7 +87,7 @@
                 <input class="text-success" type="date" @bind="SelectedActor.dateOfBirth" placeholder="DateOfBirth">
             </div>
         </div>
-        <div class="row border my-3 p-3">
+        <div class="row my-3 p-3">
             <div class="col align-self-lg-center">
                 <button type="button" class="btn btn-primary" @onclick="Save"> Save</button>
                 <button type="button" class="btn btn-primary" @onclick="Cancel"> Cancel</button>

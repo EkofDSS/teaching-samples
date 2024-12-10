@@ -1,12 +1,12 @@
 @inject IMessagingService _messagingService
-
-<h2>Messages</h2>
-<button class="clear" @onclick="clearMessages">Clear</button>
-@foreach (var msg in Messages)
-{
-    <div>@msg</div>    
-}
-
+<div class="container">
+    <h2>Messages</h2>
+    <button class="btn btn-primary" @onclick="clearMessages">Clear</button>
+    @foreach (var msg in Messages)
+    {
+        <div class="row text-info"><small>@msg</small></div>
+    }
+</div>
 @code
 {
     private List<string> Messages;

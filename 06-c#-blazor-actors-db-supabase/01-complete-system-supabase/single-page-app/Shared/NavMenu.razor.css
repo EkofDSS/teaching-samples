@@ -3,20 +3,20 @@ nav a {
     text-decoration: none;
     margin-top: 10px;
     display: inline-block;
-    background-color: #eee;
+    background-color: #039be5;
     border-radius: 4px;
 }
 
 nav a:visited,
 a:link {
-    color: #334953;
+    color: #2e5b70;
 }
 
 nav a:hover {
-    color: #039be5;
+    color: #7dc2e4;
     background-color: #cfd8dc;
 }
 
 nav a.active {
-    color: #039be5;
+    color: #03d7e5;
 }
