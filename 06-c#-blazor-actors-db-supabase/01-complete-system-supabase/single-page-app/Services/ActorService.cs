@@ -52,7 +52,8 @@ namespace project.Services
                 actorId = -1,
                 firstName = firstName,
                 lastName = lastName,
-                countryId = countryId
+                countryId = countryId,
+                createdAt = DateTime.Now
             };
             var response = await _httpClient.PostAsJsonAsync(_requestUri, actorAdd);
             await _messagingService.Add(response.IsSuccessStatusCode ?
