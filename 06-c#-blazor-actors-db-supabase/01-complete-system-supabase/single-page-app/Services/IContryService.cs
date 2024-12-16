@@ -10,7 +10,7 @@ namespace project.Services
     {
         Task<List<Country>> GetCountries();
 
-        Task<int> Add(string countryCode, string countryName);
+        Task<int> Add(string countryName);
 
         Task<int> Delete(Country country);
 

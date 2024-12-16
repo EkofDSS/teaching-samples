@@ -11,7 +11,7 @@
         @foreach(var actor in filteredActors){
             <li @onclick="@(() => OnSelect(actor))">
                 <a>
-                    @actor.firstName @actor.lastName.ToUpper() (@actor.countryCode)
+                    @actor.firstName @actor.lastName.ToUpper() (@actor.countryId)
                 </a>
             </li>
     }   

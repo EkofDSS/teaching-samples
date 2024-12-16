@@ -38,7 +38,7 @@ namespace project.Services
             long countryId)
         {
             // sending request for adding to the server
-            ActorAddDTO actorAdd = new ActorAddDTO()
+            ActorCountryDto actorAdd = new ActorCountryDto()
             {
                 Id = -1,
                 FirstName = firstName,
@@ -68,15 +68,15 @@ namespace project.Services
         public async Task<int> Update(Actor actor)
         {
             // sending request for updating to the server
-            ActorUpdateDTO actorUpd = new ActorUpdateDTO()
+            ActorUpdateDto actorUpd = new ActorUpdateDto()
             {
                 ActorId = actor.actorId,
                 FirstName = actor.firstName,
                 LastName = actor.lastName,
-                CountryCode = actor.countryCode,
+                CountryId = actor.countryId,
                 DateOfBirth = actor.dateOfBirth
             };
-            var response = await _httpClient.PutAsJsonAsync<ActorUpdateDTO>(
+            var response = await _httpClient.PutAsJsonAsync<ActorUpdateDto>(
                 _requestUri + "/" + actor.actorId, actorUpd);
             await _messagingService.Add(response.IsSuccessStatusCode ?
                 "ActorService::Sent request for update" :
@@ -90,9 +90,10 @@ namespace project.Services
             List<Actor> actors = await _httpClient.GetFromJsonAsync<List<Actor>>(
                         _requestUri);
             List<Actor> result = actors.Where(actor =>
-                            actor.firstName.ToLower().Contains(fn.ToLower()) ||
-                            actor.lastName.ToLower().Contains(ln.ToLower()) ||
-                            actor.countryCode.ToLower().Contains(c.ToLower()))
+                            actor.firstName.ToLower().Contains(fn.ToLower())
+                            || actor.lastName.ToLower().Contains(ln.ToLower())
+                            //|| actor.country.ToLower().Contains(c.ToLower())
+                            )
                         .ToList<Actor>();
             return result;
         }

@@ -26,7 +26,7 @@ else
             <select @onchange="ConutryChanged">
                 @foreach (var c in _countries)
                 {
-                    <option value=@c.countryCode>@c.countryName</option>
+                    <option value=@c.countryId>@c.countryName</option>
                 }
             </select>
             <button @onclick="Add"> Add</button>
@@ -38,7 +38,7 @@ else
                 <li>
                     <span @onclick="@(()=>OnSelect(a))">
                         <span class="badge">@a.actorId</span> @a.firstName &nbsp; @a.lastName
-                        - @a.dateOfBirth?.ToShortDateString() ( @a.countryCode )
+                        - @a.dateOfBirth?.ToShortDateString() ( @a.countryId )
                     </span>
                     <button class="delete" @onclick="@(()=>Delete(a))">x</button>
                 </li>

@@ -7,18 +7,18 @@
 {
     @if (@_currentMode == @Mode.View)
     {
-        <h2>Details for @SelectedCountry.countryName ( @SelectedCountry.countryCode.ToUpper() )</h2>
+        <h2>Details for @SelectedCountry.countryName ( @SelectedCountry.countryId )</h2>
         <br />
-        <div><span>code: </span>@SelectedCountry.countryCode</div>
+        <div><span>id: </span>@SelectedCountry.countryId</div>
         <div><span>name: </span>@SelectedCountry.countryName</div>
         <button class="clear" @onclick="Edit"> Edit</button>
     }
     @if (@_currentMode == @Mode.Edit)
     {
-        <h2>Edit data for @SelectedCountry.countryName ( @SelectedCountry.countryCode.ToUpper() )</h2>
+        <h2>Edit data for @SelectedCountry.countryName ( @SelectedCountry.countryId )</h2>
         <div>
             <label> code: </label>
-            <input @bind="SelectedCountry.countryCode" placeholder="Code">
+            <input @bind="SelectedCountry.countryId" placeholder="CountryId">
         </div>
         <div>
             <label> name: </label>
@@ -35,7 +35,7 @@
     Mode _currentMode = Mode.View;
 
     [Parameter]
-    public string Code { get; set; }
+    public long Id { get; set; }
 
 
     public Country SelectedCountry { get; set; }
@@ -44,14 +44,14 @@
     protected override async Task OnInitializedAsync()
     {
         _countries = await _countryService.GetCountries();
-        SelectedCountry = _countries.First(x => x.countryCode == Code);
+        SelectedCountry = _countries.First(x => x.countryId == Id);
     }
 
     private async Task Edit()
     {
         _currentMode = Mode.Edit;
         await _messagingService.Add("CountryDetail::Country edited: " + SelectedCountry.countryName + " ("
-        + SelectedCountry.countryCode + ")");
+        + SelectedCountry.countryId + ")");
     }
 
     private async Task Save()
@@ -59,6 +59,6 @@
         _currentMode = Mode.View;
         await _countryService.Update(SelectedCountry);
         await _messagingService.Add("CountryDetail::Country saved: " + SelectedCountry.countryName + " ("
-        + SelectedCountry.countryCode + ")");
+        + SelectedCountry.countryId + ")");
     }
 }

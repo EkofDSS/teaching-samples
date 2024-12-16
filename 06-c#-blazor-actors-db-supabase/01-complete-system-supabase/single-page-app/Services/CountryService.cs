@@ -36,13 +36,13 @@ namespace project.Services
             return countries;
         }
 
-        public async Task<int> Add(string countryCode, string countryName)
+        public async Task<int> Add(string countryName)
         {
             // sending request for adding to the server
             Country countryAdd = new Country()
             {
-                countryCode = countryCode,
-                countryName = countryName
+                countryName = countryName,
+                createdAt = DateTime.Now
             };
             var response = await _httpClient.PostAsJsonAsync(_requestUri, countryAdd);
             await _messagingService.Add(response.IsSuccessStatusCode ?
@@ -56,7 +56,7 @@ namespace project.Services
         {
             // sending request for deleting to the server
             var response = await _httpClient.DeleteAsync(_requestUri + "/"
-                + country.countryCode);
+                + country.countryId);
             await _messagingService.Add(response.IsSuccessStatusCode ?
                 "CountryService::Sent request for delete" :
                 "CountryService::Error while deleting");
@@ -69,11 +69,12 @@ namespace project.Services
        // sending request for updating to the server
             Country countryUpd = new Country()
             {
-                countryCode = country.countryCode,
-                countryName = country.countryName
+                countryId = country.countryId,
+                countryName = country.countryName,
+                createdAt = country.createdAt
             };
             var response = await _httpClient.PutAsJsonAsync<Country>(
-                _requestUri + "/" + country.countryCode, countryUpd);
+                _requestUri + "/" + country.countryId, countryUpd);
             await _messagingService.Add(response.IsSuccessStatusCode ?
                 "CountryService::Sent request for update" :
                 "CountryService::Error while updating");

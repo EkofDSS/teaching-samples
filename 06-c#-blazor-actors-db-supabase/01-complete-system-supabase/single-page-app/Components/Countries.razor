@@ -13,8 +13,8 @@ else
     <h2>All countries</h2>
 
     <div>
-        <label>Country code:
-            <input @bind="CountryCode" />
+        <label>Country id:
+            <input @bind="CountryId" />
         </label>
         <label>Country name:
             <input @bind="CountryName" />
@@ -27,7 +27,7 @@ else
         {
             <li>
                 <span @onclick="@(()=>OnSelect(c))">
-                    <span class="badge">@c.countryCode</span> @c.countryName
+                    <span class="badge">@c.countryId</span> @c.countryName
                 </span>
                 <button class="delete" @onclick="@(()=>Delete(c))">x</button>
             </li>
@@ -42,7 +42,7 @@ else
     
     private Country _selectedCountry;
 
-    private string CountryCode { get; set; } = "";
+    private long CountryId { get; set; } = -1;
     private string CountryName { get; set; } = "";
 
     protected override async Task OnInitializedAsync()
@@ -52,16 +52,16 @@ else
 
     private async Task OnSelect(Country country)
     {
-        await _messagingService.Add("Country selected: " + country.countryCode + " "
+        await _messagingService.Add("Country selected: " + country.countryId + " "
         + country.countryName);
-        _navigationManager.NavigateTo("countrydetail/" + country.countryCode);
+        _navigationManager.NavigateTo("countrydetail/" + country.countryId);
     }
 
     private async Task Add()
     {
-        await _countryService.Add(CountryCode, CountryName);
+        await _countryService.Add(CountryName);
         _countries = await _countryService.GetCountries();
-        await _messagingService.Add("Country added: " + CountryCode + " "
+        await _messagingService.Add("Country added: " + CountryId + " "
         + CountryName);
     }
 
@@ -69,7 +69,7 @@ else
     {
         await _countryService.Delete(country);
         _countries = await _countryService.GetCountries();
-        await _messagingService.Add("Country deleted: " + CountryCode + " "
+        await _messagingService.Add("Country deleted: " + CountryId + " "
         + CountryName);
     }
 
@@ -77,9 +77,9 @@ else
     {
         List<Country> countries = await _countryService.GetCountries();
         _selectedCountry = countries
-            .Where(x => x.countryCode == e.Value.ToString())
+            .Where(x => x.countryId == (long) e.Value)
             .FirstOrDefault();
-        await _messagingService.Add("Country code selected: " + e.Value.ToString());
+        await _messagingService.Add("Country id selected: " + e.Value);
     }
 
 }
