@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using project.Models;
+using project.ViewModels;
 
 namespace project.Services
 {
@@ -10,9 +11,11 @@ namespace project.Services
     {
         Task<List<Actor>> GetActors();
 
+        Task<List<ActorCountryDto>> GetActorsWithCountry();
+
         Task<int> Add(string firstName, string lastName, long countryId);
 
-        Task<int> Delete(Actor actor);
+        Task<int> Delete(long actorId);
 
         Task<int> Update(Actor actor);
 

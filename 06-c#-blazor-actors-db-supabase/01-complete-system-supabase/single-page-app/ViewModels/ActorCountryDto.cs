@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -5,12 +6,16 @@ namespace project.ViewModels
 {
     public class ActorCountryDto
     {
-        public long Id { get; set; }
-        public string LastName { get; set; }
-        public string FirstName { get; set; }
-        public long CountryId { get; set; }
-        public string CountryName { get; set; }
-        public string CountryCode { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public long id { get; set; }
+
+        public string last_name { get; set; }
+
+        public string first_name { get; set; }
+
+        public long country_id { get; set; }
+
+        public string country_name { get; set; }
+
+        public DateTime? date_of_birth { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace project.Services
             // sending request for reading to the server
             List<Country> countries = await _httpClient.GetFromJsonAsync<List<Country>>(
                     _requestUri);
-                await _messagingService.Add("CountryService::Sent request for read");
+            await _messagingService.Add("CountryService::Sent request for read");
             return countries;
         }
 

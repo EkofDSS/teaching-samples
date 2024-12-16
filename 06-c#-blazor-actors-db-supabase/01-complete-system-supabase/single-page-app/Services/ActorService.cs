@@ -34,16 +34,24 @@ namespace project.Services
             return actors;
         }
 
+        public async Task<List<ActorCountryDto>> GetActorsWithCountry()
+        {
+            // sending request for reading to the server
+            List<ActorCountryDto> actors = await _httpClient.GetFromJsonAsync<List<ActorCountryDto>>(
+                _requestUri + "/WithCountry");
+            await _messagingService.Add("ActorService::Sent request for read actors with country");
+            return actors;
+        }
         public async Task<int> Add(string firstName, string lastName,
             long countryId)
         {
             // sending request for adding to the server
-            ActorCountryDto actorAdd = new ActorCountryDto()
+            ActorAddDto actorAdd = new ActorAddDto()
             {
-                Id = -1,
-                FirstName = firstName,
-                LastName = lastName,
-                CountryId = countryId
+                actorId = -1,
+                firstName = firstName,
+                lastName = lastName,
+                countryId = countryId
             };
             var response = await _httpClient.PostAsJsonAsync(_requestUri, actorAdd);
             await _messagingService.Add(response.IsSuccessStatusCode ?
@@ -53,11 +61,11 @@ namespace project.Services
             return 0;
         }
 
-        public async Task<int> Delete(Actor actor)
+        public async Task<int> Delete(long actorId)
         {
             // sending request for deleting to the server
             var response = await _httpClient.DeleteAsync(_requestUri + "/"
-                + actor.actorId);
+                + actorId);
             await _messagingService.Add(response.IsSuccessStatusCode ?
                 "ActorService::Sent request for delete" :
                 "ActorService::Error while deleting");
@@ -70,11 +78,11 @@ namespace project.Services
             // sending request for updating to the server
             ActorUpdateDto actorUpd = new ActorUpdateDto()
             {
-                ActorId = actor.actorId,
-                FirstName = actor.firstName,
-                LastName = actor.lastName,
-                CountryId = actor.countryId,
-                DateOfBirth = actor.dateOfBirth
+                actorId = actor.actorId,
+                firstName = actor.firstName,
+                lastName = actor.lastName,
+                countryId = actor.countryId,
+                dateOfBirth = actor.dateOfBirth
             };
             var response = await _httpClient.PutAsJsonAsync<ActorUpdateDto>(
                 _requestUri + "/" + actor.actorId, actorUpd);

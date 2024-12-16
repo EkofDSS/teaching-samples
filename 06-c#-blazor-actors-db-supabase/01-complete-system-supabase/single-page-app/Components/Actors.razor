@@ -1,4 +1,5 @@
 @page "/actors"
+@using project.ViewModels
 
 @inject IActorService _actorService
 @inject ICountryService _countryService
@@ -37,10 +38,10 @@ else
             {
                 <li>
                     <span @onclick="@(()=>OnSelect(a))">
-                        <span class="badge">@a.actorId</span> @a.firstName &nbsp; @a.lastName
-                        - @a.dateOfBirth?.ToShortDateString() ( @a.countryId )
+                        <span class="badge">@a.id</span> @a.first_name &nbsp; @a.last_name
+                        - @a.date_of_birth?.ToShortDateString() ( @a.country_name.Substring(0, 3).ToUpper() )
                     </span>
-                    <button class="delete" @onclick="@(()=>Delete(a))">x</button>
+                    <button class="delete" @onclick="@(()=>Delete(a.id))">x</button>
                 </li>
             }
         </ul>
@@ -49,7 +50,7 @@ else
 
 @code
 {
-    private List<Actor> _actors;
+    private List<ActorCountryDto> _actors;
     private List<Country> _countries;
 
     private long _selectedCountryId;
@@ -62,30 +63,29 @@ else
     protected override async Task OnInitializedAsync()
     {
         _countries = await _countryService.GetCountries();
-        _actors = await _actorService.GetActors();
+        _actors = await _actorService.GetActorsWithCountry();
     }
 
-    private async Task OnSelect(Actor actor)
+    private async Task OnSelect(ActorCountryDto actor)
     {
-        await _messagingService.Add("ActorComponent::Actor selected: " + actor.firstName + " "
-        + actor.lastName);
-        _navigationManager.NavigateTo("/actordetail/" + actor.actorId);
+        await _messagingService.Add("ActorComponent::Actor selected: " + actor.first_name + " "
+        + actor.last_name);
+        _navigationManager.NavigateTo("/actordetail/" + actor.id);
     }
 
     private async Task Add()
     {
         await _actorService.Add(FirstName, LastName, _selectedCountryId);
-        _actors = await _actorService.GetActors();
+        _actors = await _actorService.GetActorsWithCountry();
         await _messagingService.Add("ActorComponent::Actor added: "
             + FirstName + " " + LastName);
     }
 
-    private async Task Delete(Actor actor)
+    private async Task Delete(long actorId)
     {
-        await _actorService.Delete(actor);
-        _actors = await _actorService.GetActors();
-        await _messagingService.Add("ActorComponent::Actor deleted: "
-        + actor.firstName + " " + LastName);
+        await _actorService.Delete(actorId);
+        _actors = await _actorService.GetActorsWithCountry();
+        await _messagingService.Add("ActorComponent::Actor deleted: ");
     }
 
     private async Task ConutryChanged(ChangeEventArgs e)

@@ -38,7 +38,7 @@ namespace ActorsRestService.Controllers
         public async Task<ActionResult<IEnumerable<ActorCountry>>> GetActorsWithCountry()    
         {
             var response = await _supabase
-                                    .Rpc("get_actors_country", null);
+                                    .Rpc("get_actor_with_country", null);
             var ret = JsonConvert.DeserializeObject<List<ActorCountry>>(response.Content);
             return ret;
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace project.ViewModels
 {
-    public class ActorUpdateDto
+    public class ActorAddDto
     {
         public long actorId { get; set; }
         public string lastName { get; set; }

@@ -21,6 +21,9 @@ namespace ActorsRestService.Models
 
         [JsonProperty("country_name")]
         public string? CountryName { get; set; }
+
+        [JsonProperty("date-of_birth")]
+        public DateTime? DateOfBirth { get; set; }
     }
 
 }
