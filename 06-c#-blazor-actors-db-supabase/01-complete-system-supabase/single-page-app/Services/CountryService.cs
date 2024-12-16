@@ -36,13 +36,13 @@ namespace project.Services
             return countries;
         }
 
-        public async Task<int> Add(string countyCode, string counntryName)
+        public async Task<int> Add(string countryCode, string countryName)
         {
             // sending request for adding to the server
             Country countryAdd = new Country()
             {
-                countryCode = countyCode,
-                countryName = counntryName
+                countryCode = countryCode,
+                countryName = countryName
             };
             var response = await _httpClient.PostAsJsonAsync(_requestUri, countryAdd);
             await _messagingService.Add(response.IsSuccessStatusCode ?

@@ -1,10 +1,5 @@
 /* ActorDetailComponent's private CSS styles */
 
-input {
-    font-size: 1em;
-    padding: .5rem;
-}
-
 button:hover {
     background-color: #cfd8dc;
 }

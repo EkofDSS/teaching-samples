@@ -61,7 +61,7 @@ namespace ActorsRestService.Controllers
             {
                 return BadRequest();
             }
-            Actor oldActor = await _supabase
+            Actor? oldActor = await _supabase
                             .From<Actor>()
                             .Where(a => a.ActorId == id)
                             .Single();
@@ -71,10 +71,10 @@ namespace ActorsRestService.Controllers
             }
             oldActor.LastName = newData.LastName;
             oldActor.FirstName = newData.FirstName;
-            oldActor.CountryCode = newData.CountryCode;
+            oldActor.CountryId = newData.CountryId;
             oldActor.DateOfBirth = newData.DateOfBirth;
             oldActor.CreatedAt = newData.CreatedAt;
-            var _ = await _supabase
+            await _supabase
                     .From<Actor>()
                     .Update(oldActor);
             return NoContent();

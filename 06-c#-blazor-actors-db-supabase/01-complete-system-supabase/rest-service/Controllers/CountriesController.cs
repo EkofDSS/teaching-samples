@@ -32,13 +32,13 @@ namespace ActorssRestService.Controllers
             return response.Models;
         }
 
-        // GET: api/Countries/5
-        [HttpGet("{code}")]
-        public async Task<ActionResult<Country>> GetCountry(string code)
+        // GET: api/Countries/4
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Country>> GetCountry(long id)
         {
             var response = await _supabase
                                     .From<Country>()
-                                    .Where(c => c.CountryCode == code)
+                                    .Where(c => c.CountryId == id)
                                     .Get();
             if (response == null)
             {
@@ -52,26 +52,27 @@ namespace ActorssRestService.Controllers
         }
 
 
-        // PUT: api/Countries/RU
+        // PUT: api/Countries/4
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{code}")]
-        public async Task<IActionResult> PutCountry(string code, Country newData)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutCountry(long id, Country newData)
         {
-            if (code != newData.CountryCode)
+            if (id != newData.CountryId)
             {
                 return BadRequest();
             }
-            Country oldItem = await _supabase
+            Country? oldItem = await _supabase
                             .From<Country>()
-                            .Where(a => a.CountryCode == code)
+                            .Where(a => a.CountryId == id)
                             .Single();
             if (oldItem is null)
             {
                 return BadRequest();
             }
-            oldItem.CountryCode = newData.CountryCode;
+            oldItem.CountryId = newData.CountryId;
             oldItem.CountryName = newData.CountryName;
             oldItem.CreatedAt = newData.CreatedAt;
+            oldItem.Population = newData.Population;
             await _supabase
                     .From<Country>()
                     .Update(oldItem);
@@ -86,19 +87,19 @@ namespace ActorssRestService.Controllers
             var ret = await _supabase
                 .From<Country>()
                 .Insert(country);
-            string code = "";
+            long id = -1;
             if ((ret is not null) && (ret.Model is not null))
-                code = ret.Model.CountryCode;
-            return CreatedAtAction("GetCountry", new { code = code }, country);
+                id = ret.Model.CountryId;
+            return CreatedAtAction("GetCountry", new { id = id }, country);
         }
 
-        // DELETE: api/Countries/RU
-        [HttpDelete("{code}")]
-        public async Task<IActionResult> DeleteCountry(string code)
+        // DELETE: api/Countries/4
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCountry(long id)
         {
             var response = await _supabase
                                     .From<Country>()
-                                    .Where(a => a.CountryCode == code)
+                                    .Where(a => a.CountryId == id)
                                     .Get();
             if (response == null)
             {
@@ -110,7 +111,7 @@ namespace ActorssRestService.Controllers
             }
             await _supabase
                     .From<Country>()
-                    .Where(x => x.CountryCode == code)
+                    .Where(x => x.CountryId == id)
                     .Delete();
             return NoContent();
         }

@@ -16,8 +16,8 @@ namespace ActorsRestService.Models
         [Column("first_name")]
         public string? FirstName { get; set; }
 
-        [Column("country_code")]
-        public string? CountryCode { get; set; }
+        [Column("country_id")]
+        public long CountryId { get; set; }
 
         [Column("date_of_birth")]
         public DateTime? DateOfBirth { get; set; }
