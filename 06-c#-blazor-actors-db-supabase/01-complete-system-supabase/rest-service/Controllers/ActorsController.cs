@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Supabase;
 
 using ActorsRestService.Models;
+using Newtonsoft.Json;
 
 namespace ActorsRestService.Controllers
 {
@@ -30,6 +31,16 @@ namespace ActorsRestService.Controllers
                                     .From<Actor>()
                                     .Get();
             return response.Models;
+        }
+
+        // GET: api/Actors
+        [HttpGet("WithCountry")]
+        public async Task<ActionResult<IEnumerable<ActorCountry>>> GetActorsWithCountry()    
+        {
+            var response = await _supabase
+                                    .Rpc("get_actors_country", null);
+            var ret = JsonConvert.DeserializeObject<List<ActorCountry>>(response.Content);
+            return ret;
         }
 
         // GET: api/Actors/5
