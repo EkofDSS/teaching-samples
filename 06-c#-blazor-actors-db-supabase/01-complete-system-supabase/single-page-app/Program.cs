@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 
 using project.Services;
 
+
 namespace project
 {
     public class Program
@@ -17,13 +18,18 @@ namespace project
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => 
-                new HttpClient { BaseAddress = new Uri(
-                    builder.HostEnvironment.BaseAddress) });
-    
+            builder.Services.AddScoped(sp =>
+                new HttpClient
+                {
+                    BaseAddress = new Uri(
+                    builder.HostEnvironment.BaseAddress)
+                });
+   
             builder.Services.AddScoped<IActorService, ActorService>();
+
             builder.Services.AddScoped<ICountryService, CountryService>();
         
             builder.Services.AddSingleton<IMessagingService, MessagingService>();

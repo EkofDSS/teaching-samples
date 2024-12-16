@@ -7,6 +7,7 @@ using System.Linq;
 
 using project.Models;
 using project.ViewModels;
+using static System.Net.WebRequestMethods;
 
 namespace project.Services
 {
@@ -21,7 +22,7 @@ namespace project.Services
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(
                 nameof(httpClient));
-            _requestUri = "https://localhost:6001/api/Actors";
+            _requestUri = "https://localhost:6001/api" + "/Actors";
             _messagingService = messagingService ?? throw new
                 ArgumentNullException(nameof(messagingService));
         }

@@ -23,7 +23,7 @@ namespace project.Services
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(
                 nameof(httpClient));
-            _requestUri = "https://localhost:6001/api/Countries";
+            _requestUri = "https://localhost:6001/api" + "/Countries";
             _messagingService = messagingService ?? throw new
                 ArgumentNullException(nameof(messagingService));
         }
