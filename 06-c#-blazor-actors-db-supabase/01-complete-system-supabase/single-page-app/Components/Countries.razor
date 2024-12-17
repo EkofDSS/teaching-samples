@@ -13,21 +13,22 @@ else
     <h2>All countries</h2>
 
     <div>
-        <label>Country code:
-            <input @bind="CountryCode" />
-        </label>
         <label>Country name:
             <input @bind="CountryName" />
+        </label>
+        <label>
+            Country code:
+            <input @bind="CountryCode" />
         </label>
         <button @onclick="Add"> Add</button>
     </div>
 
-    <ul class="heroes">
+    <ul class="countries">
         @foreach (var c in _countries)
         {
             <li>
                 <span @onclick="@(()=>OnSelect(c))">
-                    <span class="badge">@c.countryId</span> @c.countryName
+                    <span class="badge">@c.countryId</span> @c.countryName (@c.countryCode)
                 </span>
                 <button class="delete" @onclick="@(()=>Delete(c))">x</button>
             </li>
