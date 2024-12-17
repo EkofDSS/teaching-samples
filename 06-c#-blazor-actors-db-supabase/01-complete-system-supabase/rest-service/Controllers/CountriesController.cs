@@ -71,6 +71,7 @@ namespace ActorssRestService.Controllers
             }
             oldItem.CountryId = newData.CountryId;
             oldItem.CountryName = newData.CountryName;
+            oldItem.CountryCode = newData.CountryCode;
             oldItem.CreatedAt = newData.CreatedAt;
             oldItem.Population = newData.Population;
             await _supabase

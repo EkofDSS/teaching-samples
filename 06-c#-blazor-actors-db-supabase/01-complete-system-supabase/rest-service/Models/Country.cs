@@ -14,6 +14,9 @@ namespace ActorsRestService.Models
         [Column("name")]
         public string? CountryName { get; set; }
 
+        [Column("code")]
+        public string? CountryCode { get; set; }
+
         [Column("created_at")]
         public DateTime? CreatedAt { get; set; }
 
