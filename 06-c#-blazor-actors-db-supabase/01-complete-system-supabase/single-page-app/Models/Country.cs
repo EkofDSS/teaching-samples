@@ -7,6 +7,7 @@ namespace project.Models
     {
         public long countryId { get; set; }
         public string countryName { get; set; }
+        public string countryCode { get; set; }
         public DateTime? createdAt { get; set; }
     }
 }

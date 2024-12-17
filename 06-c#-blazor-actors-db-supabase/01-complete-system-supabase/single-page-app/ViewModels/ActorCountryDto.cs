@@ -16,6 +16,8 @@ namespace project.ViewModels
 
         public string country_name { get; set; }
 
+        public string country_code { get; set; }
+
         public DateTime? date_of_birth { get; set; }
     }
 }

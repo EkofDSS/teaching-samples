@@ -13,8 +13,8 @@ else
     <h2>All countries</h2>
 
     <div>
-        <label>Country id:
-            <input @bind="CountryId" />
+        <label>Country code:
+            <input @bind="CountryCode" />
         </label>
         <label>Country name:
             <input @bind="CountryName" />
@@ -42,8 +42,8 @@ else
     
     private Country _selectedCountry;
 
-    private long CountryId { get; set; } = -1;
     private string CountryName { get; set; } = "";
+    private string CountryCode { get; set; } = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -59,18 +59,18 @@ else
 
     private async Task Add()
     {
-        await _countryService.Add(CountryName);
+        await _countryService.Add(CountryName, CountryCode);
         _countries = await _countryService.GetCountries();
-        await _messagingService.Add("Country added: " + CountryId + " "
-        + CountryName);
+        await _messagingService.Add("Country added: " 
+        + CountryName + " " + CountryCode);
     }
 
     private async Task Delete(Country country)
     {
-        await _countryService.Delete(country);
+        await _countryService.Delete(country.countryId);
         _countries = await _countryService.GetCountries();
-        await _messagingService.Add("Country deleted: " + CountryId + " "
-        + CountryName);
+        await _messagingService.Add("Country deleted: " + country.countryId + " "
+        + country.countryName + " " + country.countryCode);
     }
 
     private async Task ConutryChanged(ChangeEventArgs e)

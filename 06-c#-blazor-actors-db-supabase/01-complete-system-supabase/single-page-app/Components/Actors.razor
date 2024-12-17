@@ -39,7 +39,7 @@ else
                 <li>
                     <span @onclick="@(()=>OnSelect(a))">
                         <span class="badge">@a.id</span> @a.first_name &nbsp; @a.last_name
-                        - @a.date_of_birth?.ToShortDateString() ( @a.country_name.Substring(0, 3).ToUpper() )
+                        - @a.date_of_birth?.ToShortDateString() ( @a.country_code )
                     </span>
                     <button class="delete" @onclick="@(()=>Delete(a.id))">x</button>
                 </li>
