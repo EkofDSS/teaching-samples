@@ -1,49 +1,59 @@
+@using project.ViewModels
 @inject IActorService _actorService;
 @inject NavigationManager _navigationManager;
 @inject IMessagingService _messagingService;
 
-<div id="search-component">
-    <h4><label for="searchBox">Actor Search</label></h4>
-
-    <input id="search-box" @bind-value="searchBox" @bind-value:event="oninput"/>
-
-    <ul class="search-result">
-        @foreach(var actor in filteredActors){
-            <li @onclick="@(() => OnSelect(actor))">
-                <a>
-                    @actor.firstName @actor.lastName.ToUpper() (@actor.countryId)
-                </a>
-            </li>
-    }   
-    </ul>
+<div class="container">
+    <h2 class="bg-primary text-white">Actor Search</h2>
+    <div class="row">
+        <div class="col">
+            <input id="search-box" @bind-value="SearchBox" @bind-value:event="oninput" />
+        </div>
+    </div>
+    <div class="row">
+        <ul class="search-result">
+            @foreach (var actor in filteredActors)
+            {
+                <li @onclick="@(() => OnSelect(actor))">
+                    <a>
+                        @actor.first_name @actor.last_name.ToUpper() (@actor.country_code)
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
 </div>
 
-@code{
+@code {
 
     string search;
 
-    List<Actor> filteredActors = new List<Actor>();
+    List<ActorCountryDto> filteredActors = new List<ActorCountryDto>();
 
 
-    string searchBox {
-        get{
+    string SearchBox
+    {
+        get
+        {
             return search;
         }
-        set{
+        set
+        {
             search = value;
-            filteredActors =  Search(value).GetAwaiter().GetResult();
+            filteredActors = Search(value).GetAwaiter().GetResult();
         }
     }
-    
-    private async Task<List<Actor>> Search(string text)
+
+    private async Task<List<ActorCountryDto>> Search(string text)
     {
-        return await _actorService.Search(searchBox, searchBox, searchBox);
+        return await _actorService.Search(SearchBox, SearchBox, SearchBox);
     }
 
-    private async Task OnSelect(Actor a){
-        await _messagingService.Add("Actor selected " + a.firstName + " " 
-            + a.lastName + " (" + a.actorId + ")");
-        _navigationManager.NavigateTo("/actordetail/" + a.actorId);
+    private async Task OnSelect(ActorCountryDto a)
+    {
+        await _messagingService.Add("Actor selected " + a.first_name + " "
+            + a.last_name + " (" + a.id + ")");
+        _navigationManager.NavigateTo("/actordetail/" + a.id);
     }
-    
+
 }

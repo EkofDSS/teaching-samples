@@ -19,6 +19,6 @@ namespace project.Services
 
         Task<int> Update(Actor actor);
 
-        Task<List<Actor>> Search(string fn, string ln, string c);
+        Task<List<ActorCountryDto>> Search(string fn, string ln, string c);
     }
 }

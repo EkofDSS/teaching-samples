@@ -95,16 +95,16 @@ namespace project.Services
             return 0;
         }
 
-        public async Task<List<Actor>> Search(string fn, string ln, string c)
+        public async Task<List<ActorCountryDto>> Search(string fn, string ln, string c)
         {
-            List<Actor> actors = await _httpClient.GetFromJsonAsync<List<Actor>>(
-                        _requestUri);
-            List<Actor> result = actors.Where(actor =>
-                            actor.firstName.ToLower().Contains(fn.ToLower())
-                            || actor.lastName.ToLower().Contains(ln.ToLower())
-                            //|| actor.country.ToLower().Contains(c.ToLower())
+            List<ActorCountryDto> actors = await _httpClient.GetFromJsonAsync<List<ActorCountryDto>>(
+                        _requestUri + "/WithCountry");
+            List<ActorCountryDto> result = actors.Where(actor =>
+                            actor.first_name.ToLower().Contains(fn.ToLower())
+                            || actor.last_name.ToLower().Contains(ln.ToLower())
+                            || actor.country_name.ToLower().Contains(c.ToLower())
                             )
-                        .ToList<Actor>();
+                        .ToList<ActorCountryDto>();
             return result;
         }
 

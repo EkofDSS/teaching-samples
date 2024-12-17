@@ -13,24 +13,32 @@
 else
 {
     <div class="container">
-        <h2>All enlisted actors</h2>
+        <h2 class="bg-primary text-white">All enlisted actors</h2>
 
-        <div>
-            <label>
+        <div class="row">
+            <div class="col">
                 First name:
+            </div>
+            <div class="col">
                 <input @bind="FirstName" />
-            </label>
-            <label>
+            </div>
+            <div class="col">
                 Last name:
+            </div>
+            <div class="col">
                 <input @bind="LastName" />
-            </label>
-            <select @onchange="ConutryChanged">
+            </div>
+            <div class="col">
+                <select @onchange="ConutryChanged">
                 @foreach (var c in _countries)
                 {
                     <option value=@c.countryId>@c.countryName</option>
                 }
             </select>
-            <button @onclick="Add"> Add</button>
+            </div>
+            <div class="col">
+                    <button type="button" class="btn btn-primary" @onclick="Add">Add</button>
+            </div>
         </div>
 
         <ul class="actors">
