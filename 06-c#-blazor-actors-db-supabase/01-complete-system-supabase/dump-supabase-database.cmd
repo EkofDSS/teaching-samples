@@ -1,0 +1,1 @@
+pg_dump --inserts --column-inserts --username=vladofilipovic@hotmail.com --password=s_S1upabase --host=hetwconijbntskcjnptc.supabase.co --port=5432 Movies > database-dump.sql
