@@ -8,6 +8,7 @@ using System.Linq;
 using project.Models;
 using project.ViewModels;
 using static System.Net.WebRequestMethods;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace project.Services
 {
@@ -97,14 +98,17 @@ namespace project.Services
 
         public async Task<List<ActorCountryDto>> Search(string fn, string ln, string c)
         {
+            await _messagingService.Add("ActorService::Search for " + fn + " " + ln + " " + c);
             List<ActorCountryDto> actors = await _httpClient.GetFromJsonAsync<List<ActorCountryDto>>(
                         _requestUri + "/WithCountry");
+            await _messagingService.Add("ActorService::Search actors length: " + actors.Count);
             List<ActorCountryDto> result = actors.Where(actor =>
                             actor.first_name.ToLower().Contains(fn.ToLower())
                             || actor.last_name.ToLower().Contains(ln.ToLower())
                             || actor.country_name.ToLower().Contains(c.ToLower())
                             )
                         .ToList<ActorCountryDto>();
+            await _messagingService.Add("ActorService::Search result length: " + result.Count);
             return result;
         }
 

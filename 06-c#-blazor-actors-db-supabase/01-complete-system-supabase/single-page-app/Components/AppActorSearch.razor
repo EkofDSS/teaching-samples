@@ -4,7 +4,7 @@
 @inject IMessagingService _messagingService;
 
 <div class="container">
-    <h2 class="bg-primary text-white">Actor Search</h2>
+    <h2 class="bg-primary text-white"><label for="SearchBox">Actor Search</label></h2>
     <div class="row">
         <div class="col">
             <input id="search-box" @bind-value="SearchBox" @bind-value:event="oninput" />
@@ -40,12 +40,14 @@
         set
         {
             search = value;
-            filteredActors = Search(value).GetAwaiter().GetResult();
+            filteredActors = Search(value).GetAwaiter().GetResult(); // blocking
+            Console.WriteLine(filteredActors.Count);
         }
     }
 
     private async Task<List<ActorCountryDto>> Search(string text)
     {
+        await _messagingService.Add("AppActorSearch component: Searching for " + text);
         return await _actorService.Search(SearchBox, SearchBox, SearchBox);
     }
 
