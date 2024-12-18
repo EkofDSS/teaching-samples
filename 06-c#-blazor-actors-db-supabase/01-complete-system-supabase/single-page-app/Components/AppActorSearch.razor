@@ -6,9 +6,11 @@
 <div class="container">
     <h2 class="bg-primary text-white"><label for="SearchBox">Actor Search</label></h2>
     <div class="row">
-        <div class="col">
-            <input id="search-box" @bind-value="@toSearch" 
-            @oninput="@((ChangeEventArgs args) => FilterChangedAsync(args))" />
+        <div class="col-9">
+            <input id="search-box" @bind-value="@toSearch"/>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-primary" @onclick="() => FilterChangedAsync()">Search</button>
         </div>
     </div>
     <div class="row">
@@ -31,10 +33,13 @@
 
     List<ActorCountryDto> filteredActors = new List<ActorCountryDto>();
 
-
-    private async void FilterChangedAsync(ChangeEventArgs args)
+    private async void FilterChangedAsync()
     {
-        toSearch = args.Value.ToString();
+        if (toSearch == "")
+        {
+            filteredActors = new List<ActorCountryDto>();
+            return;
+        }
         filteredActors = await Search(toSearch);
     }
 
