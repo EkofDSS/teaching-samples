@@ -4,17 +4,17 @@
     border-right: 1px solid gray;
     width: 195px;
     padding: 5px;
-    background-color: white;
+    background-color: cornflowerblue;
     cursor: pointer;
     list-style-type: none;
 }
 
 .search-result li:hover {
-    background-color: #607D8B;
+    background-color: #3da4d5;
 }
 
 .search-result li a {
-    color: #888;
+    color: #353363;
     display: block;
     text-decoration: none;
 }

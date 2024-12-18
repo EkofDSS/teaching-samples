@@ -7,7 +7,8 @@
     <h2 class="bg-primary text-white"><label for="SearchBox">Actor Search</label></h2>
     <div class="row">
         <div class="col">
-            <input id="search-box" @bind-value="SearchBox" @bind-value:event="oninput" />
+            <input id="search-box" @bind-value="@toSearch" 
+            @oninput="@((ChangeEventArgs args) => FilterChangedAsync(args))" />
         </div>
     </div>
     <div class="row">
@@ -26,29 +27,21 @@
 
 @code {
 
-    string search;
+    string toSearch;
 
     List<ActorCountryDto> filteredActors = new List<ActorCountryDto>();
 
 
-    string SearchBox
+    private async void FilterChangedAsync(ChangeEventArgs args)
     {
-        get
-        {
-            return search;
-        }
-        set
-        {
-            search = value;
-            filteredActors = Search(value).GetAwaiter().GetResult(); // blocking
-            Console.WriteLine(filteredActors.Count);
-        }
+        toSearch = args.Value.ToString();
+        filteredActors = await Search(toSearch);
     }
 
     private async Task<List<ActorCountryDto>> Search(string text)
     {
         await _messagingService.Add("AppActorSearch component: Searching for " + text);
-        return await _actorService.Search(SearchBox, SearchBox, SearchBox);
+        return await _actorService.Search(text, text, text);
     }
 
     private async Task OnSelect(ActorCountryDto a)
