@@ -10,37 +10,52 @@
 }
 else
 {
-    <h2>All countries</h2>
-
-    <div>
-        <label>Country name:
-            <input @bind="CountryName" />
-        </label>
-        <label>
-            Country code:
-            <input @bind="CountryCode" />
-        </label>
-        <button @onclick="Add"> Add</button>
+    <div class="container">
+        <h2 class="bg-primary text-white">All countries</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Country Name</th>
+                    <th colspan="2">Country code</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input @bind="CountryName" />
+                    </td>
+                    <td>
+                        <input @bind="CountryCode" />
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-primary" @onclick="Add"> Add</button>
+                    </td>
+                </tr>
+                @foreach (var c in _countries)
+                {
+                    <tr>
+                        <td>
+                            <span @onclick="@(()=>OnSelect(c))">
+                            <span class="badge">@c.countryId</span> @c.countryName </span>
+                        </td>
+                        <td>
+                            <span @onclick="@(()=>OnSelect(c))"> @c.countryCode </span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-primary" @onclick="@(()=>Delete(c))">x</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-
-    <ul class="countries">
-        @foreach (var c in _countries)
-        {
-            <li>
-                <span @onclick="@(()=>OnSelect(c))">
-                    <span class="badge">@c.countryId</span> @c.countryName (@c.countryCode)
-                </span>
-                <button class="delete" @onclick="@(()=>Delete(c))">x</button>
-            </li>
-        }
-    </ul>
 }
-<CountryDetail></CountryDetail> 
+<CountryDetail></CountryDetail>
 
 @code
 {
     private List<Country> _countries;
-    
+
     private Country _selectedCountry;
 
     private string CountryName { get; set; } = "";
@@ -62,7 +77,7 @@ else
     {
         await _countryService.Add(CountryName, CountryCode);
         _countries = await _countryService.GetCountries();
-        await _messagingService.Add("Country added: " 
+        await _messagingService.Add("Country added: "
         + CountryName + " " + CountryCode);
     }
 
@@ -78,7 +93,7 @@ else
     {
         List<Country> countries = await _countryService.GetCountries();
         _selectedCountry = countries
-            .Where(x => x.countryId == (long) e.Value)
+            .Where(x => x.countryId == (long)e.Value)
             .FirstOrDefault();
         await _messagingService.Add("Country id selected: " + e.Value);
     }
