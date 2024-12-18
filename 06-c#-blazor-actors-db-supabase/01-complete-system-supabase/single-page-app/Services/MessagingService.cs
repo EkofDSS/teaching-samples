@@ -17,7 +17,6 @@ namespace project.Services
         public event EventHandler<List<string>> OnMessagesChanged; 
 
         public async Task Add(string message){
-            Console.WriteLine(message);
             Messages.Add(message);
             OnMessagesChanged?.Invoke(this, Messages);
             await Task.CompletedTask;

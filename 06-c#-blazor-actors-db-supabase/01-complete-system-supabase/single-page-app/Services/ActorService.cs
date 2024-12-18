@@ -85,7 +85,8 @@ namespace project.Services
                 firstName = actor.firstName,
                 lastName = actor.lastName,
                 countryId = actor.countryId,
-                dateOfBirth = actor.dateOfBirth
+                dateOfBirth = actor.dateOfBirth,
+                createdAt = actor.createdAt
             };
             var response = await _httpClient.PutAsJsonAsync<ActorUpdateDto>(
                 _requestUri + "/" + actor.actorId, actorUpd);
@@ -101,14 +102,12 @@ namespace project.Services
             await _messagingService.Add("ActorService::Search for " + fn + " " + ln + " " + c);
             List<ActorCountryDto> actors = await _httpClient.GetFromJsonAsync<List<ActorCountryDto>>(
                         _requestUri + "/WithCountry");
-            await _messagingService.Add("ActorService::Search actors length: " + actors.Count);
             List<ActorCountryDto> result = actors.Where(actor =>
                             actor.first_name.ToLower().Contains(fn.ToLower())
                             || actor.last_name.ToLower().Contains(ln.ToLower())
                             || actor.country_name.ToLower().Contains(c.ToLower())
                             )
                         .ToList<ActorCountryDto>();
-            await _messagingService.Add("ActorService::Search result length: " + result.Count);
             return result;
         }
 

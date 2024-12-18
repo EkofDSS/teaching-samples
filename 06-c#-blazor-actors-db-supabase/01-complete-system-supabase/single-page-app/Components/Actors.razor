@@ -30,14 +30,14 @@ else
             </div>
             <div class="col">
                 <select @onchange="ConutryChanged">
-                @foreach (var c in _countries)
-                {
-                    <option value=@c.countryId>@c.countryName</option>
-                }
-            </select>
+                    @foreach (var c in _countries)
+                    {
+                        <option value=@c.countryId>@c.countryName</option>
+                    }
+                </select>
             </div>
             <div class="col">
-                    <button type="button" class="btn btn-primary" @onclick="Add">Add</button>
+                <button type="button" class="btn btn-primary" @onclick="Add">Add</button>
             </div>
         </div>
 

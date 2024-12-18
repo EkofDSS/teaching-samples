@@ -14,16 +14,28 @@
     protected override void OnInitialized()
     {
         Messages = _messagingService.Get();
-        _messagingService.OnMessagesChanged += MessagesChanged;
+        _messagingService.OnMessagesChanged += RenderMessages;
+        _messagingService.OnMessagesChanged += WriteMessagesToConsole;
     }
 
-    private async void MessagesChanged(object sender, List<string> newMessages)
+    private async void RenderMessages(object sender, List<string> newMessages)
     {
         await InvokeAsync(() =>
         {
             Messages = newMessages;
             // tell blazor to re-render the UI
             StateHasChanged();
+        });
+    }
+
+    private async void WriteMessagesToConsole(object sender, List<string> newMessages)
+    {
+        await InvokeAsync(() =>
+        {
+            Console.WriteLine("--- Messages ---");
+            foreach(string m in newMessages)
+                Console.WriteLine(m);
+            Console.WriteLine("----------------");
         });
     }
 
