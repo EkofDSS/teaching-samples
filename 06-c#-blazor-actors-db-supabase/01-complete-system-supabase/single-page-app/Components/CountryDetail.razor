@@ -7,24 +7,54 @@
 {
     @if (@_currentMode == @Mode.View)
     {
-        <h2>Details for @SelectedCountry.countryName ( @SelectedCountry.countryId )</h2>
-        <br />
-        <div><span>id: </span>@SelectedCountry.countryId</div>
-        <div><span>name: </span>@SelectedCountry.countryName</div>
-        <button class="clear" @onclick="Edit"> Edit</button>
+        <div class="row border my-2 p-2">
+            <h2 class="text-success">Details for <span class="text-primary"> @SelectedCountry.countryName ( @SelectedCountry.countryCode )</span></h2>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-borderless">
+                <tr>
+                    <td>id:</td>
+                    <td>@SelectedCountry.countryId</td>
+                </tr>
+                <tr>
+                    <td>name: </td>
+                    <td>@SelectedCountry.countryName</td>
+                </tr>
+                <tr>
+                    <td>code: </td>
+                    <td>@SelectedCountry.countryCode</td>
+                </tr>
+            </table>
+        </div>
+        <div class="row my-2 p-2">
+            <div class="col align-self-lg-center">
+                <button type="button" class="btn btn-primary" @onclick="Edit"> Edit</button>
+            </div>
+        </div>
     }
     @if (@_currentMode == @Mode.Edit)
     {
-        <h2>Edit data for @SelectedCountry.countryName ( @SelectedCountry.countryId )</h2>
-        <div>
-            <label> code: </label>
-            <input @bind="SelectedCountry.countryId" placeholder="CountryId">
+        <div class="row border my-2 p-2">
+            <h2 class="text-success">Edit data for <span class="text-primary"> @SelectedCountry.countryName ( @SelectedCountry.countryCode )</span></h2>
         </div>
-        <div>
-            <label> name: </label>
-            <input @bind="SelectedCountry.countryName" placeholder="Name">
+        <div class="table-responsive">
+            <table class="table table-borderless">
+                <tr>
+                    <td> name: </td>
+                    <td><input @bind="SelectedCountry.countryName" placeholder="Name"></td>
+                </tr>
+                <tr>
+                    <td> code: </td>
+                    <td><input @bind="SelectedCountry.countryCode" placeholder="Code"></td>
+                </tr>
+            </table>
         </div>
-        <button class="clear" @onclick="Save"> Save</button>
+        <div class="row my-2 p-2">
+            <div class="col align-self-lg-center">
+                <button type="button" class="btn btn-primary" @onclick="Save"> Save</button>
+                <button type="button" class="btn btn-primary" @onclick="Cancel"> Cancel</button>
+            </div>
+        </div>
     }
 }
 
@@ -35,7 +65,7 @@
     Mode _currentMode = Mode.View;
 
     [Parameter]
-    public long Id { get; set; }
+    public string Id { get; set; }
 
 
     public Country SelectedCountry { get; set; }
@@ -44,7 +74,7 @@
     protected override async Task OnInitializedAsync()
     {
         _countries = await _countryService.GetCountries();
-        SelectedCountry = _countries.First(x => x.countryId == Id);
+        SelectedCountry = _countries.First(x => x.countryId == Convert.ToInt64(Id));
     }
 
     private async Task Edit()
@@ -60,5 +90,11 @@
         await _countryService.Update(SelectedCountry);
         await _messagingService.Add("CountryDetail::Country saved: " + SelectedCountry.countryName + " ("
         + SelectedCountry.countryId + ")");
+    }
+
+    private async Task Cancel()
+    {
+        _currentMode = Mode.View;
+        await _messagingService.Add("CountryDetail::Country changes canceled: " + SelectedCountry.countryName + " (" + SelectedCountry.countryCode + ")");
     }
 }
