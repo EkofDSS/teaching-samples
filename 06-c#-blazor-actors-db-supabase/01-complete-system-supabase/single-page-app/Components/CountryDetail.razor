@@ -40,11 +40,15 @@
         <div class="table-responsive">
             <table class="table table-borderless">
                 <tr>
-                    <td> name: </td>
+                    <td>id:</td>
+                    <td>@SelectedCountry.countryId</td>
+                </tr>
+                <tr>
+                    <td>name: </td>
                     <td><input @bind="SelectedCountry.countryName" placeholder="Name"></td>
                 </tr>
                 <tr>
-                    <td> code: </td>
+                    <td>code: </td>
                     <td><input @bind="SelectedCountry.countryCode" placeholder="Code"></td>
                 </tr>
             </table>

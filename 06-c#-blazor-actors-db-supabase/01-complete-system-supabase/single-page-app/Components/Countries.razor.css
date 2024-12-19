@@ -1,41 +1,7 @@
 /* ActorComponent's private CSS styles */
 
-.countries {
-    margin: 0 0 2em 0;
-    list-style-type: none;
-    padding: 0;
-    width: 35em;
-}
-
-.countries li {
-    position: relative;
-    cursor: pointer;
-}
-
-.countries li:hover {
-    left: .1em;
-}
-
-.countries a {
-    color: #333;
-    text-decoration: none;
-    background-color: #EEE;
-    margin: .5em;
-    padding: .3em 0;
-    height: 1.6em;
-    border-radius: 4px;
-    display: block;
-    width: 100%;
-}
-
-.countries a:hover {
-    color: #2c3a41;
-    background-color: #e6e6e6;
-}
-
-.countries a:active {
-    background-color: #525252;
-    color: #fafafa;
+.underlineHover:hover {
+    text-decoration: underline;
 }
 
 .badge {

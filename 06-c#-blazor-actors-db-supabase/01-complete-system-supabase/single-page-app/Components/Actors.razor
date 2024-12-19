@@ -18,13 +18,17 @@ else
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th colspan="2">Country</th>
+                    <th class ="underlineHover">Id</th>
+                    <th class="underlineHover">First name</th>
+                    <th class="underlineHover">Last name</th>
+                    <th class="underlineHover" colspan="2">Country name</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td>
+                        &nbsp;
+                    </td>
                     <td>
                         <input @bind="FirstName" />
                     </td>
@@ -47,15 +51,21 @@ else
                 {
                     <tr>
                         <td>
-                            <span @onclick="@(()=>OnSelect(a))">
-                            <span class="badge">@a.id</span> @a.first_name
+                            <span class="underlineHover" @onclick="@(()=>OnSelect(a))">
+                                <span class="badge">@a.id</span>
+                            </span>
+
+                        </td>
+                        <td>
+                            <span class="underlineHover" @onclick="@(()=>OnSelect(a))">
+                                @a.first_name
                             </span>
                         </td>
                         <td>
-                            <span @onclick="@(()=>OnSelect(a))"> @a.last_name </span>
+                            <span class="underlineHover" @onclick="@(()=>OnSelect(a))"> @a.last_name </span>
                         </td>
                         <td>
-                            <span @onclick="@(()=>OnSelect(a))"> @a.country_name </span>
+                            <span class="underlineHover" @onclick="@(()=>OnSelect(a))"> @a.country_name </span>
                         </td>
                         <td class="text-center">
                             <button class="btn btn-primary" @onclick="@(()=>Delete(a.id))">x</button>

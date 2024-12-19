@@ -15,12 +15,14 @@ else
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th>Country Name</th>
-                    <th colspan="2">Country code</th>
+                    <th class="underlineHover" @onclick="@(() => Reorder("Id"))">Id</th>
+                    <th class="underlineHover">Country name</th>
+                    <th class="underlineHover" colspan="2">Country code</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td>&nbsp;</td>
                     <td>
                         <input @bind="CountryName" />
                     </td>
@@ -35,11 +37,17 @@ else
                 {
                     <tr>
                         <td>
-                            <span @onclick="@(()=>OnSelect(c))">
-                            <span class="badge">@c.countryId</span> @c.countryName </span>
+                            <span class="underlineHover" @onclick="@(()=>OnSelect(c))">
+                                <span class="badge">@c.countryId</span>
+                            </span>
                         </td>
                         <td>
-                            <span @onclick="@(()=>OnSelect(c))"> @c.countryCode </span>
+                            <span class="underlineHover" @onclick="@(()=>OnSelect(c))">
+                                @c.countryName
+                            </span>
+                        </td>
+                        <td>
+                            <span class="underlineHover" @onclick="@(()=>OnSelect(c))"> @c.countryCode </span>
                         </td>
                         <td class="text-center">
                             <button class="btn btn-primary" @onclick="@(()=>Delete(c))">x</button>
@@ -57,6 +65,8 @@ else
     private List<Country> _countries;
 
     private Country _selectedCountry;
+
+    private bool? _idAscending = null;
 
     private string CountryName { get; set; } = "";
     private string CountryCode { get; set; } = "";
@@ -98,4 +108,37 @@ else
         await _messagingService.Add("Country id selected: " + e.Value);
     }
 
+    private async Task Reorder(string column)
+    {
+        if (column == "Id")
+        {
+            if (_idAscending == null)
+                _idAscending = true;
+            else
+                _idAscending = !_idAscending;
+            if (_idAscending == true)
+                _countries = _countries
+                    .OrderBy(x => x.countryId)
+                    .ToList();
+            else
+                _countries = _countries
+                    .OrderByDescending(x => x.countryId)
+                    .ToList();
+        }
+        else if (column == "Name")
+        {
+            _countries = _countries
+                .OrderBy(x => x.countryName)
+                .ToList();
+        }
+        else if (column == "Code")
+        {
+            _countries = _countries
+                .OrderBy(x => x.countryCode)
+                .ToList();
+        }
+        StateHasChanged();
+    }
 }
+ 
+
