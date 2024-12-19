@@ -18,10 +18,10 @@ else
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th class ="underlineHover">Id</th>
-                    <th class="underlineHover">First name</th>
-                    <th class="underlineHover">Last name</th>
-                    <th class="underlineHover" colspan="2">Country name</th>
+                    <th class="underlineHover" @onclick="@(() => Reorder("Id"))">Id</th>
+                    <th class="underlineHover" @onclick="@(() => Reorder("FirstName"))">First name</th>
+                    <th class="underlineHover" @onclick="@(() => Reorder("LastName"))">Last name</th>
+                    <th class="underlineHover" colspan="2" @onclick="@(() => Reorder("CountryName"))">Country name</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,6 +84,10 @@ else
 
     private long _selectedCountryId;
 
+    private bool? _idAscending = null;
+    private bool? _firstNameAscending = null;
+    private bool? _lastNameAscending = null;
+    private bool? _countryNameAscending = null;
 
     private string FirstName { get; set; } = "";
     private string LastName { get; set; } = "";
@@ -122,6 +126,71 @@ else
         _selectedCountryId = long.Parse(e.Value.ToString());
         await _messagingService.Add("ActorComponent::Country selected: "
         + e.Value.ToString());
+    }
+
+    private async Task Reorder(string column)
+    {
+        if (column == "Id")
+        {
+            if (_idAscending == null)
+                _idAscending = true;
+            else
+                _idAscending = !_idAscending;
+            if (_idAscending == true)
+                _actors = _actors
+                    .OrderBy(x => x.id)
+                    .ToList();
+            else
+                _actors = _actors
+                    .OrderByDescending(x => x.id)
+                    .ToList();
+        }
+        else if (column == "FirstName")
+        {
+            if (_firstNameAscending == null)
+                _firstNameAscending = true;
+            else
+                _firstNameAscending = !_firstNameAscending;
+            if (_firstNameAscending == true)
+                _actors = _actors
+                    .OrderBy(x => x.first_name)
+                    .ToList();
+            else
+                _actors = _actors
+                    .OrderByDescending(x => x.first_name)
+                    .ToList();
+        }
+        else if (column == "LastName")
+        {
+            if (_lastNameAscending == null)
+                _lastNameAscending = true;
+            else
+                _lastNameAscending = !_lastNameAscending;
+            if (_lastNameAscending == true)
+                _actors = _actors
+                    .OrderBy(x => x.last_name)
+                    .ToList();
+            else
+                _actors = _actors
+                    .OrderByDescending(x => x.last_name)
+                    .ToList();
+        }
+        else if (column == "CountryName")
+        {
+            if (_countryNameAscending == null)
+                _countryNameAscending = true;
+            else
+                _countryNameAscending = !_countryNameAscending;
+            if (_countryNameAscending == true)
+                _actors = _actors
+                    .OrderBy(x => x.country_name)
+                    .ToList();
+            else
+                _countries = _countries
+                    .OrderByDescending(x => x.countryName)
+                    .ToList();
+        }
+        StateHasChanged();
     }
 
 }
